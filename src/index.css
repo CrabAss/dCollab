@@ -39,6 +39,10 @@ code {
   height: 100%;
 }
 
+.flexGrow {
+  flex-grow: 1;
+}
+
 .chatPanel {
   display: flex;
   flex-direction: column;

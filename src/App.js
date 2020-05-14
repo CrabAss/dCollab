@@ -3,7 +3,8 @@ import Web3 from 'web3';
 import { useFormik } from 'formik';
 import { decodeFromHex, encodeToHex, getMsgDate } from './util'
 import './resizer.css'
-import {styles} from './styles'
+import { styles } from './styles'
+import KanbanPanel from './kanban/kanbanPanel'
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField'
@@ -25,12 +26,11 @@ const EMPTY_STRING = ""
 const NameContext = React.createContext(EMPTY_STRING);
 
 const TopBar = (props) => {
-  const classes = props.classes;
   return (
     <div>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.flexGrow}>
+          <Typography variant="h6" className='flexGrow'>
             dCollab (COMP4913 Capstone Project)
           </Typography>
           {props.dialog}
@@ -54,8 +54,8 @@ const SettingsDialog = (props) => {
   const name = useContext(NameContext);
   const formik = useFormik({
     initialValues: {
-      symPassword: props.symPassword,
-      username: name
+      dcGroupId: props.symPassword,
+      dcUsername: name
     },
     onSubmit: values => {
       if (props.configWithKey(values) !== false) {
@@ -77,19 +77,19 @@ const SettingsDialog = (props) => {
               Please enter Group ID and your username to join a group.
             </DialogContentText>
             <TextField
-              name="symPassword"
+              name="dcGroupId"
               margin="dense"
               label='Group ID'
-              value={formik.values.symPassword}
-              onBlur={() => props.updateSymKey(formik.values.symPassword)}
+              value={formik.values.dcGroupId}
+              onBlur={() => props.updateSymKey(formik.values.dcGroupId)}
               onChange={formik.handleChange}
               fullWidth
               required
             />
             <TextField
-              name="username"
+              name="dcUsername"
               label='Username'
-              value={formik.values.username}
+              value={formik.values.dcUsername}
               onChange={formik.handleChange}
               fullWidth
               required
@@ -188,10 +188,6 @@ class MsgDisplay extends React.Component {
   }
 }
 
-const KanbanPanel = (props) => {
-
-}
-
 class App extends React.Component {
   constructor (props) {
     super(props);
@@ -221,7 +217,7 @@ class App extends React.Component {
       <NameContext.Provider value={this.state.username}>
         <TopBar classes={this.props.classes} dialog={settingsDialog} />
         <SplitPane split="vertical" defaultSize={400} minSize={300} primary="second" className='unibox'>
-          <div />
+          <KanbanPanel />
           <ChatPanel
             msgs={this.state.msgs}
             sendMessage={(values) => this.sendMessage(values)}
@@ -268,7 +264,7 @@ class App extends React.Component {
       alert("Group ID should be at least 3 characters!");
       return false;
     }
-    if (!values.username || values.username.length === 0) {
+    if (!values.dcUsername || values.dcUsername.length === 0) {
       alert("Please pick a username!");
       return false;
     }
@@ -292,7 +288,7 @@ class App extends React.Component {
 
     this.setState({
       isConfigured: true,
-      username: values.username,
+      username: values.dcUsername,
     })
   }
 }
