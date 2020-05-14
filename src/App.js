@@ -1,10 +1,12 @@
 import React, { useContext } from 'react'
 import Web3 from 'web3';
 import { useFormik } from 'formik';
+import * as shortId from 'shortid';
+
 import { decodeFromHex, encodeToHex, getMsgDate } from './util'
-import './resizer.css'
 import { styles } from './styles'
 import KanbanPanel from './kanban/kanbanPanel'
+import './resizer.css'
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField'
@@ -120,11 +122,11 @@ const ChatPanel = (props) => {
       <Box className="chatPanel fullHeight" p={1}>
         <MsgDisplay msgs={props.msgs} />
         <form onSubmit={formik.handleSubmit}>
-          <Box display="flex" flexDirection="row" alignItems="flex-end">
+          <Box display="flex" flexDirection="row" alignItems="center">
             <Box flexGrow={1}>
               <TextField
                 name="text"
-                label='Write your message...'
+                placeholder='Write your message...'
                 value={formik.values.text}
                 onChange={formik.handleChange}
                 fullWidth
@@ -160,15 +162,15 @@ class MsgDisplay extends React.Component {
     return (
       <Box id='messages'>
         {
-          this.props.msgs.map((m, idx) => {
+          this.props.msgs.map((m) => {
             const msgType = selfName === m.username ? 'sent' : 'received'
             const msgClasses = `msg ${msgType}`
             return (
-              <Box className={msgClasses} key={idx}>
+              <Box className={msgClasses} key={m.id}>
                 <Box>
                   <Box className='content'>
                     {msgType === 'received' &&
-                      <Box className='name'>{m.username}</Box>
+                      <div className='name'>{m.username}</div>
                     }
                     {m.text}
                   </Box>
@@ -216,19 +218,22 @@ class App extends React.Component {
     return (
       <NameContext.Provider value={this.state.username}>
         <TopBar classes={this.props.classes} dialog={settingsDialog} />
-        <SplitPane split="vertical" defaultSize={400} minSize={300} primary="second" className='unibox'>
-          <KanbanPanel />
-          <ChatPanel
-            msgs={this.state.msgs}
-            sendMessage={(values) => this.sendMessage(values)}
-          />
-        </SplitPane>
+        {this.state.isConfigured &&
+          <SplitPane split="vertical" defaultSize={400} minSize={300} primary="second" className='unibox'>
+            <KanbanPanel/>
+            <ChatPanel
+              msgs={this.state.msgs}
+              sendMessage={(values) => this.sendMessage(values)}
+            />
+          </SplitPane>
+        }
       </NameContext.Provider>
     )
   }
 
   sendMessage(values) {
     const msg = {
+      id: shortId.generate(),
       text: values.text,
       username: this.state.username
     };

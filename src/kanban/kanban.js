@@ -1,16 +1,17 @@
 import React, { memo } from "react";
 import { useInputValue, useTodos } from "./custom-hooks";
+import './kanban.css'
 
-import { List, Paper, Grid } from "@material-ui/core";
-
+import { List, Paper } from "@material-ui/core";
 import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
 import ListItem from '@material-ui/core/ListItem'
 import Checkbox from '@material-ui/core/Checkbox'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import IconButton from '@material-ui/core/IconButton'
 import { DeleteOutlined } from '@material-ui/icons'
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import Box from '@material-ui/core/Box'
 
 const TodoListItem = memo(props => (
   <ListItem divider={props.divider}>
@@ -28,52 +29,45 @@ const TodoListItem = memo(props => (
   </ListItem>
 ));
 
-const AddTodo = memo(props => (
-  <Paper style={{ margin: 16, padding: 16 }}>
-    <Grid container>
-      <Grid xs={10} md={11} item style={{ paddingRight: 16 }}>
-        <TextField
-          placeholder="Add Todo here"
-          value={props.inputValue}
-          onChange={props.onInputChange}
-          onKeyPress={props.onInputKeyPress}
-          fullWidth
-        />
-      </Grid>
-      <Grid xs={2} md={1} item>
-        <Button
-          fullWidth
-          color="secondary"
-          variant="outlined"
-          onClick={props.onButtonClick}
-        >
-          Add
-        </Button>
-      </Grid>
-    </Grid>
-  </Paper>
-));
+const AddTodo = props => (
+  <Box display="flex" flexDirection="row" alignItems="center" pt={2}>
+    <Box flexGrow={1} pl={2}>
+      <TextField
+        placeholder="Add Todo here"
+        value={props.inputValue}
+        onChange={props.onInputChange}
+        onKeyPress={props.onInputKeyPress}
+        fullWidth
+        required
+      />
+    </Box>
+    <Box>
+      <IconButton
+        color="secondary"
+        onClick={props.onButtonClick}
+      >
+        <AddCircleIcon />
+      </IconButton>
+    </Box>
+  </Box>
+);
 
 
-const TodoList = memo(props => (
-  <>
-    {props.items.length > 0 && (
-      <Paper style={{ margin: 16 }}>
-        <List style={{ overflow: "auto" }}>
-          {props.items.map((todo, idx) => (
-            <TodoListItem
-              {...todo}
-              key={`TodoItem.${idx}`}
-              divider={idx !== props.items.length - 1}
-              onButtonClick={() => props.onItemRemove(idx)}
-              onCheckBoxToggle={() => props.onItemCheck(idx)}
-            />
-          ))}
-        </List>
-      </Paper>
-    )}
-  </>
-));
+const TodoList = props => {
+  return (
+      <List>
+        {props.items.map((todo, idx) => (
+          <TodoListItem
+            {...todo}
+            key={`TodoItem.${idx}`}
+            divider={idx !== props.items.length - 1}
+            onButtonClick={() => props.onItemRemove(idx)}
+            onCheckBoxToggle={() => props.onItemCheck(idx)}
+          />
+        ))}
+      </List>
+  )
+};
 
 const TodoApp = () => {
   const { inputValue, changeInput, clearInput, keyInput } = useInputValue()
@@ -84,7 +78,7 @@ const TodoApp = () => {
     addTodo(inputValue);
   }
   return (
-    <div>
+    <Paper className='todoApp'>
       <AddTodo
         inputValue={inputValue}
         onInputChange={changeInput}
@@ -96,7 +90,7 @@ const TodoApp = () => {
         onItemCheck={idx => checkTodo(idx)}
         onItemRemove={idx => removeTodo(idx)}
       />
-    </div>
+    </Paper>
   )
 }
 

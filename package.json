@@ -13,6 +13,7 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "react-split-pane": "^0.1.91",
+    "shortid": "^2.2.15",
     "web3": "^1.2.7"
   },
   "scripts": {

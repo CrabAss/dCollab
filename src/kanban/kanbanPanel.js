@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    height: '100%',
   },
   padding: {
     padding: theme.spacing(3),
@@ -63,7 +64,7 @@ function TabPanel(props) {
       id={`scrollable-auto-tabpanel-${index}`}
       aria-labelledby={`scrollable-auto-tab-${index}`}
       {...other}
-      className='fullHeight'
+      className='fullHeight flexGrow overflowAuto'
     >
       {value === index && (
         <Box p={3}>

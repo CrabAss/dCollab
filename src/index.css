@@ -43,6 +43,10 @@ code {
   flex-grow: 1;
 }
 
+.overflowAuto {
+  overflow: auto;
+}
+
 .chatPanel {
   display: flex;
   flex-direction: column;
