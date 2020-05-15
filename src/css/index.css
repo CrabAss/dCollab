@@ -46,3 +46,7 @@ code {
 .overflowAuto {
   overflow: auto;
 }
+
+.positionRelative {
+  position: relative;
+}

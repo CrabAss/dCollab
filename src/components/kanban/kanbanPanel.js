@@ -1,16 +1,12 @@
-import React from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import PropTypes from 'prop-types';
-import Box from '@material-ui/core/Box'
+import React from 'react'
+import { makeStyles, withStyles } from '@material-ui/core/styles'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import PropTypes from 'prop-types'
 import Kanban from './kanban'
-
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
     flexDirection: 'column',
@@ -24,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 const AntTabs = withStyles({
   root: {
     borderBottom: '1px solid #e8e8e8',
+    position: 'relative',
   },
   indicator: {
     backgroundColor: '#1890ff',
@@ -63,13 +60,9 @@ function TabPanel(props) {
       id={`scrollable-auto-tabpanel-${index}`}
       aria-labelledby={`scrollable-auto-tab-${index}`}
       {...other}
-      className='fullHeight flexGrow overflowAuto'
+      className='flexGrow positionRelative'
     >
-      {value === index && (
-        <Box p={3}>
-          {children}
-        </Box>
-      )}
+      {value === index && children}
     </div>
   );
 }

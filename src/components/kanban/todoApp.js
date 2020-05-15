@@ -48,7 +48,7 @@ const AddTodo = props => {
 }
 
 const TodoList = props => (
-  <List>
+  <List className='overflowAuto'>
     {props.items.map((todo, idx) => (
       <TodoItem
         {...todo}
@@ -63,7 +63,7 @@ const TodoList = props => (
 )
 
 const TodoApp = props => (
-  <Paper className='todoApp'>
+  <Paper className='todoApp  positionRelative'>
     <Box mx={2} pt={4}>
       <Typography variant='h4'>Title</Typography>
     </Box>

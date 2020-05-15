@@ -7,9 +7,17 @@ import '../css/resizer.css'
 const MainPanel = (props) => {
   if (props.isConfigured) {
     return (
-      <SplitPane split="vertical" defaultSize={400} minSize={300} primary="second" className='unibox'>
-        <KanbanPanel />
-        <ChatPanel />
+      <SplitPane
+        split="vertical"
+        defaultSize={400}
+        minSize={300}
+        primary="second"
+        className='unibox'
+        style={{ flex: '0 1 auto' }}
+        // pane1Style={{flex: '0 1 auto'}}
+      >
+        <KanbanPanel/>
+        <ChatPanel/>
       </SplitPane>
     )
   }

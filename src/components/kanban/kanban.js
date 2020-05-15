@@ -1,29 +1,23 @@
-import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import theme from '../../util/theme'
+import React from 'react'
 import TodoApp from '../../containers/kanban'
 import AddListButton from './addListButton'
+import Box from '@material-ui/core/Box'
 
-const useStyles = makeStyles({
-  root: {
-    border: '4px solid rgba(0, 0, 0, 0.12)',
-    borderRadius: theme.spacing(2),
-    width: 400,
-    height: 400,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-})
+const ListWrapper = props => (
+  <div className='listWrapper'>
+    {props.children}
+  </div>
+)
 
-const Kanban = props => {
-  const classes = useStyles()
-  return (
-    <div>
+const Kanban = props => (
+  <Box p={3} className='kanbanRoot'>
+    <ListWrapper>
       <TodoApp/>
+    </ListWrapper>
+    <ListWrapper>
       <AddListButton/>
-    </div>
-  )
-}
+    </ListWrapper>
+  </Box>
+)
 
 export default Kanban

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import AddIcon from '@material-ui/icons/Add'
 import theme from '../../util/theme'
@@ -12,6 +12,12 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    cursor: 'pointer',
+    backgroundColor: 'white',
+  },
+  icon: {
+    fontSize: 96,
+    color: 'rgba(0, 0, 0, 0.12)',
   },
 })
 
@@ -19,7 +25,7 @@ const AddListButton = props => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      <AddIcon fontSize='large'/>
+      <AddIcon className={classes.icon}/>
     </div>
   )
 }
