@@ -33,7 +33,7 @@ const AddTodo = props => (
   <Box display="flex" flexDirection="row" alignItems="center" pt={2}>
     <Box flexGrow={1} pl={2}>
       <TextField
-        placeholder="Add Todo here"
+        placeholder="What're you going to do?"
         value={props.inputValue}
         onChange={props.onInputChange}
         onKeyPress={props.onInputKeyPress}

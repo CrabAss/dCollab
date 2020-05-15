@@ -11,14 +11,14 @@ body {
   justify-content: center;
 }
 
-html, body, #root {
+html, body, #root, .app {
   height: 100%;
   width: 100%;
   padding: 0;
   margin: 0;
 }
 
-#root {
+.app {
   display: flex;
   flex-direction: column;
 }
@@ -52,6 +52,8 @@ code {
   flex-direction: column;
   background-color: #eeeeee !important;
 }
+
+
 
 #messages {
   list-style-type: none;
@@ -110,7 +112,6 @@ code {
 #messages .msg.sent > div {
   background-color: #2979FF;
   color: #fff;
-  border-top-right-radius: 0;
 }
 
 #messages .msg.sent .content a {
@@ -122,13 +123,13 @@ code {
   font-size: 10px;
 }
 
-/*#messages .msg .dropdown {*/
+/*#whisper .msg .dropdown {*/
 /*  margin-left: .25rem;*/
 /*  display: inline;*/
 /*}*/
 
-/*#messages .msg .dropdown-toggle,*/
-/*#messages .msg .dropdown-toggle:hover {*/
+/*#whisper .msg .dropdown-toggle,*/
+/*#whisper .msg .dropdown-toggle:hover {*/
 /*  color: #fff;*/
 /*  text-decoration: none;*/
 /*}*/
@@ -136,13 +137,12 @@ code {
 #messages .msg.received > div {
   background-color: #fff;
   color: #000;
-  border-top-left-radius: 0;
 }
 
-/*#messages .msg.sent > div:first-child {*/
-/*  border-top-right-radius: 0;*/
-/*}*/
+#messages .msg.sent > div:first-child {
+  border-top-right-radius: 0;
+}
 
-/*#messages .msg.received > div:first-child {*/
-/*  border-top-left-radius: 0;*/
-/*}*/
+#messages .msg.received > div:first-child {
+  border-top-left-radius: 0;
+}

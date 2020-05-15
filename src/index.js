@@ -1,12 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import './css/index.css';
+import App from './components/App';
+import * as serviceWorker from './util/serviceWorker';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
-import theme from './theme';
+import theme from './util/theme';
+
+import { Provider } from 'react-redux'
+
+import reduxStore from './configureStore'
+import { PersistGate } from 'redux-persist/integration/react'
 
 
 ReactDOM.render(
@@ -14,7 +19,11 @@ ReactDOM.render(
   <ThemeProvider theme={theme}>
     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
     <CssBaseline />
-    <App />
+    <Provider store={reduxStore.store}>
+      <PersistGate loading={null} persistor={reduxStore.persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
   </ThemeProvider>,
   // </React.StrictMode>
   document.getElementById('root')
