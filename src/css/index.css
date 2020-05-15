@@ -65,7 +65,8 @@ code {
 }
 
 #messages .msg {
-  padding: 0 4px;
+  /*padding: 5px 10px;*/
+  margin: 6px 3px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

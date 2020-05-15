@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './css/index.css';
-import App from './components/App';
+import App from './containers/App';
 import * as serviceWorker from './util/serviceWorker';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -20,7 +21,7 @@ ReactDOM.render(
     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
     <CssBaseline />
     <Provider store={reduxStore.store}>
-      <PersistGate loading={null} persistor={reduxStore.persistor}>
+      <PersistGate loading={<CircularProgress />} persistor={reduxStore.persistor}>
         <App />
       </PersistGate>
     </Provider>

@@ -7,7 +7,6 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import TextField from '@material-ui/core/TextField'
 import DialogActions from '@material-ui/core/DialogActions'
-import { decodeFromHex, encodeToHex } from '../util/util'
 
 const EMPTY_STRING = ''
 
@@ -35,24 +34,6 @@ export const SettingsDialog = (props) => {
     props.shh.generateSymKeyFromPassword(values.dcGroupId).then(symKeyID => {
       props.setSymKeyId(symKeyID)
       props.shh.getSymKey(symKeyID).then(symKey => {
-        let filter = {
-          topics: [symKey.substring(0, 10)],
-          symKeyID: symKeyID,
-        }
-        if (props.config.subscriptionID !== EMPTY_STRING) {
-          props.shh.unsubscribe(props.subscriptionID)
-        }
-
-        props.shh.subscribe('messages', filter, (error, message, subscription) => {
-          let newMessageObj = decodeFromHex(message.payload)
-          console.log(newMessageObj)
-          if (newMessageObj.id === '0') {
-            props.setSubscriptionID(subscription.id)
-          } else {
-            props.newMessage(newMessageObj)
-          }
-        })
-
         props.setWhisper({
           topic: symKey.substring(0, 10),
           symKey: symKey,
@@ -60,29 +41,16 @@ export const SettingsDialog = (props) => {
           isConfigured: true,
           username: values.dcUsername,
         })
-
-        setTimeout(() => sendInitSignal(), 1000)  // not working
+        window.location.reload()
       })
     })
   }
 
-  const sendInitSignal = () => {
-    console.log('send init signal: ' + props.config.symKeyID)
-    const msg = {
-      id: '0',
-    };  // init signal
-
-    const postData = {
-      symKeyID: props.config.symKeyID,
-      topic: props.config.topic,
-      payload: encodeToHex(JSON.stringify(msg)),
-      ttl: 60,
-      powTarget: 1,
-      powTime: 100
-    };
-
-    props.shh.post(postData);
-  }
+  const isValuesEqual = (values) =>
+    values.dcGroupId === props.config.symPassword &&
+    values.dcUsername === props.config.username &&
+    values.dcGroupId !== EMPTY_STRING &&
+    values.dcUsername !== EMPTY_STRING;
 
   const formik = useFormik({
     initialValues: {
@@ -90,8 +58,11 @@ export const SettingsDialog = (props) => {
       dcUsername: props.config.username,
     },
     onSubmit: values => {
+      if (isValuesEqual(values)) {
+        return handleClose()
+      }
       if (configWhisper(values) !== false) {
-        handleClose()
+        return handleClose()
       }
     },
   });

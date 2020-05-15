@@ -16,6 +16,9 @@ const messages = (state = [], action) => {
         return [newMsgSegment]
       }
       if (action.m.sender === stateCopy.slice(-1)[0].sender) {
+        if (action.m.id === stateCopy.slice(-1)[0].id) {
+          return state  // do nothing
+        }
         stateCopy.slice(-1)[0].messages.push(newMsg)
         return stateCopy
       }
