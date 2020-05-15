@@ -1,10 +1,6 @@
-/*
-*/
-
-import { SET_WHISPER, SET_SYMKEYID, SET_SUBSCRIPTION_ID } from '../actions'
+import { SET_WHISPER, SET_SYMKEYID, SET_SUBSCRIPTION_ID, SET_USERNAME } from '../actions/whisper'
 
 const EMPTY_STRING = ""
-
 const defaultState = {
   isConfigured: false,
   username: EMPTY_STRING,
@@ -23,6 +19,9 @@ const whisper = (state = defaultState, action) => {
       return stateCopy
     case SET_SUBSCRIPTION_ID:
       stateCopy.subscriptionID = action.subscriptionID
+      return stateCopy
+    case SET_USERNAME:
+      stateCopy.username = action.username
       return stateCopy
     case SET_WHISPER:
       const symKeyID = state.symKeyID

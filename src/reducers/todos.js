@@ -1,4 +1,4 @@
-import { ADD_TODO, REMOVE_TODO, TOGGLE_TODO } from '../actions'
+import { ADD_TODO, REMOVE_TODO, TOGGLE_TODO } from '../actions/todos'
 
 const newTodoItem = (caption) => ({
   caption,

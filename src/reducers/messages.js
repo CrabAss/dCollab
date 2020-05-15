@@ -1,4 +1,4 @@
-import { CLEAR_MSG, NEW_MSG } from '../actions'
+import { CLEAR_MSG, NEW_MSG } from '../actions/messages'
 import { getMsgDate } from '../util/util'
 
 const messages = (state = [], action) => {

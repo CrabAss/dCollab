@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import App from '../components/App'
-import { newMessage, setSubscriptionID, setSymKeyId, setWhisper } from '../actions'
+import { setSubscriptionID, setSymKeyId, setWhisper } from '../actions/whisper'
+import { newMessage } from '../actions/messages'
 
 const mapStateToProps = (state, ownProps) => ({
   config: state.whisper,

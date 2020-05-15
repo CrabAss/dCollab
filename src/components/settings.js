@@ -31,25 +31,32 @@ export const SettingsDialog = (props) => {
       alert("Please pick a username!");
       return false;
     }
-    props.shh.generateSymKeyFromPassword(values.dcGroupId).then(symKeyID => {
-      props.setSymKeyId(symKeyID)
-      props.shh.getSymKey(symKeyID).then(symKey => {
-        props.setWhisper({
-          topic: symKey.substring(0, 10),
-          symKey: symKey,
-          symPassword: values.dcGroupId,
-          isConfigured: true,
-          username: values.dcUsername,
+
+    if (values.dcGroupId === props.config.symPassword) {
+    } else {
+      props.shh.generateSymKeyFromPassword(values.dcGroupId).then(symKeyID => {
+        props.setSymKeyId(symKeyID)
+        props.shh.getSymKey(symKeyID).then(symKey => {
+          props.clearMessage()
+          props.setWhisper({
+            topic: symKey.substring(0, 10),
+            symKey: symKey,
+            symPassword: values.dcGroupId,
+            isConfigured: true,
+            username: values.dcUsername,
+          })
+          window.location.reload()
         })
-        window.location.reload()
       })
-    })
+    }
   }
 
-  const isValuesEqual = (values) =>
+  const isGroupIdEqual = (values) =>
     values.dcGroupId === props.config.symPassword &&
+    values.dcGroupId.length >= 3;
+
+  const isUsernameEqual = (values) =>
     values.dcUsername === props.config.username &&
-    values.dcGroupId !== EMPTY_STRING &&
     values.dcUsername !== EMPTY_STRING;
 
   const formik = useFormik({
@@ -58,11 +65,13 @@ export const SettingsDialog = (props) => {
       dcUsername: props.config.username,
     },
     onSubmit: values => {
-      if (isValuesEqual(values)) {
-        return handleClose()
-      }
-      if (configWhisper(values) !== false) {
-        return handleClose()
+      if (isGroupIdEqual(values)) {
+        if (!isUsernameEqual(values)) {
+          props.setUsername(values.dcUsername)
+        }
+        handleClose()
+      } else {
+        configWhisper(values)
       }
     },
   });
