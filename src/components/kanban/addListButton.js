@@ -1,29 +1,27 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import AddIcon from '@material-ui/icons/Add'
 import theme from '../../util/theme'
-import TodoApp from '../../containers/kanban'
-import AddListButton from './addListButton'
 
 const useStyles = makeStyles({
   root: {
     border: '4px solid rgba(0, 0, 0, 0.12)',
     borderRadius: theme.spacing(2),
     width: 400,
-    height: 400,
+    height: 160,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
 })
 
-const Kanban = props => {
+const AddListButton = props => {
   const classes = useStyles()
   return (
-    <div>
-      <TodoApp/>
-      <AddListButton/>
+    <div className={classes.root}>
+      <AddIcon fontSize='large'/>
     </div>
   )
 }
 
-export default Kanban
+export default AddListButton

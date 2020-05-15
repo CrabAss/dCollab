@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { addTodo, toggleTodo, removeTodo, setVisibilityFilter } from '../actions/todos'
+import { addTodo, toggleTodo, removeTodo, modifyTodo } from '../actions/todos'
 import todoApp from '../components/kanban/todoApp'
 
 const mapStateToProps = (state, ownProps) => ({
@@ -10,7 +10,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   addTodo: (caption) => dispatch(addTodo(caption)),
   toggleTodo: (id) => dispatch(toggleTodo(id)),
   removeTodo: (id) => dispatch(removeTodo(id)),
-  setVisibilityFilter: (config) => dispatch(setVisibilityFilter(config)),
+  modifyTodo: (id, text) => dispatch(modifyTodo(id, text)),
+  // setVisibilityFilter: (config) => dispatch(setVisibilityFilter(config)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(todoApp)

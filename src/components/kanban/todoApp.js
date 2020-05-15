@@ -9,6 +9,7 @@ import Box from '@material-ui/core/Box'
 
 import TodoItem from './todoItem'
 import { useFormik } from 'formik'
+import Typography from '@material-ui/core/Typography'
 
 const EMPTY_STRING = ''
 
@@ -55,6 +56,7 @@ const TodoList = props => (
         divider={idx !== props.items.length - 1}
         toggleTodo={id => props.toggleTodo(id)}
         removeTodo={id => props.removeTodo(id)}
+        modifyTodo={(text) => props.modifyTodo(todo.id, text)}
       />
     ))}
   </List>
@@ -62,11 +64,15 @@ const TodoList = props => (
 
 const TodoApp = props => (
   <Paper className='todoApp'>
+    <Box mx={2} pt={4}>
+      <Typography variant='h4'>Title</Typography>
+    </Box>
     <AddTodo onItemAdd={text => props.addTodo(text)}/>
     <TodoList
       items={props.todos}
       toggleTodo={id => props.toggleTodo(id)}
       removeTodo={id => props.removeTodo(id)}
+      modifyTodo={(id, text) => props.modifyTodo(id, text)}
     />
   </Paper>
 )

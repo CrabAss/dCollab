@@ -1,10 +1,10 @@
 import React from 'react'
 import ListItem from '@material-ui/core/ListItem'
 import Checkbox from '@material-ui/core/Checkbox'
-import ListItemText from '@material-ui/core/ListItemText'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import IconButton from '@material-ui/core/IconButton'
 import { DeleteOutlined } from '@material-ui/icons'
+import EditableText from './editableText'
 
 const TodoItem = props => (
   <ListItem divider={props.divider}>
@@ -13,7 +13,12 @@ const TodoItem = props => (
       checked={props.isCompleted}
       disableRipple
     />
-    <ListItemText primary={props.caption} style={{ textDecoration: props.isCompleted ? 'line-through' : 'none' }}/>
+    <EditableText
+      text={props.caption}
+      className={props.isCompleted ? 'todo completed' : 'todo'}
+      callback={(text) => props.modifyTodo(text)}
+      isEditable={!props.isCompleted}
+    />
     <ListItemSecondaryAction>
       <IconButton aria-label="Delete Todo" onClick={() => props.removeTodo(props.id)}>
         <DeleteOutlined/>

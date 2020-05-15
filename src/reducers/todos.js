@@ -1,10 +1,18 @@
-import { ADD_TODO, REMOVE_TODO, TOGGLE_TODO } from '../actions/todos'
+import { ADD_TODO, MODIFY_TODO, REMOVE_TODO, TOGGLE_TODO } from '../actions/todos'
 
 const newTodoItem = (id, caption) => ({
   id,
   caption,
   isCompleted: false,
 })
+
+const newTodoList = (id = '0', title = 'Untitled List') => ({
+  id,
+  title,
+  items: []
+})
+
+const newKanban = [newTodoList()]
 
 const todos = (state = [], action) => {
   switch (action.type) {
@@ -14,11 +22,18 @@ const todos = (state = [], action) => {
         newTodoItem(action.id, action.text)
       ]
     case TOGGLE_TODO:
-      return state.map((todo) => {
+      return state.map(todo => {
         if (todo.id === action.id) {
-          todo.isCompleted = !todo.isCompleted;
+          todo.isCompleted = !todo.isCompleted
         }
-        return todo;
+        return todo
+      })
+    case MODIFY_TODO:
+      return state.map(todo => {
+        if (todo.id === action.id) {
+          todo.caption = action.text
+        }
+        return todo
       })
     case REMOVE_TODO:
       return state.filter(todo => todo.id !== action.id)

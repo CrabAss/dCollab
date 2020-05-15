@@ -3,6 +3,7 @@ import * as shortId from 'shortid'
 export const ADD_TODO = 'ADD_TODO'
 export const TOGGLE_TODO = 'TOGGLE_TODO'
 export const REMOVE_TODO = 'REMOVE_TODO'
+export const MODIFY_TODO = 'MODIFY_TODO'
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
 
 
@@ -20,6 +21,12 @@ export const toggleTodo = id => ({
 export const removeTodo = id => ({
   type: REMOVE_TODO,
   id
+})
+
+export const modifyTodo = (id, text) => ({
+  type: MODIFY_TODO,
+  id,
+  text,
 })
 
 export const setVisibilityFilter = filter => ({

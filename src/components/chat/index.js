@@ -8,6 +8,7 @@ import { encodeToHex } from '../../util/util'
 import * as shortId from 'shortid'
 
 import MsgDisplay from './msgDisplay'
+import '../../css/chat.css'
 
 const EMPTY_STRING = ""
 

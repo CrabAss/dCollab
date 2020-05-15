@@ -4,7 +4,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box'
-import TodoApp from '../../containers/kanban'
+import Kanban from './kanban'
 
 
 
@@ -97,7 +97,7 @@ export default function KanbanPanel() {
         <AntTab label="Tab 3" />
       </AntTabs>
       <TabPanel value={value} index={0}>
-        <TodoApp />
+        <Kanban/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
