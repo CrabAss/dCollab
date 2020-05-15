@@ -1,23 +1,27 @@
 import { ADD_TODO, REMOVE_TODO, TOGGLE_TODO } from '../actions/todos'
 
-const newTodoItem = (caption) => ({
+const newTodoItem = (id, caption) => ({
+  id,
   caption,
   isCompleted: false,
 })
 
-const todos = (state = {}, action) => {
-  const stateCopy = Object.assign({}, state);
+const todos = (state = [], action) => {
   switch (action.type) {
     case ADD_TODO:
-      return {
+      return [
         ...state,
-        [action.id]: newTodoItem(action.text)
-      }
+        newTodoItem(action.id, action.text)
+      ]
     case TOGGLE_TODO:
-      stateCopy[action.id].isCompleted = !(stateCopy[action.id].isCompleted)
-      return stateCopy
+      return state.map((todo) => {
+        if (todo.id === action.id) {
+          todo.isCompleted = !todo.isCompleted;
+        }
+        return todo;
+      })
     case REMOVE_TODO:
-      break
+      return state.filter(todo => todo.id !== action.id)
     default:
       return state
   }

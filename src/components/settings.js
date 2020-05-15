@@ -10,54 +10,53 @@ import DialogActions from '@material-ui/core/DialogActions'
 
 const EMPTY_STRING = ''
 
-export const SettingsDialog = (props) => {
+export const SettingsDialog = props => {
 
-  const [open, setOpen] = React.useState(!props.config.isConfigured);
+  const [open, setOpen] = React.useState(!props.config.isConfigured)
 
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
-  const configWhisper = (values) => {
-    if (values.dcGroupId.length < 3) {
-      alert("Group ID should be at least 3 characters!");
-      return false;
-    }
-    if (!values.dcUsername || values.dcUsername.length === 0) {
-      alert("Please pick a username!");
-      return false;
-    }
-
-    if (values.dcGroupId === props.config.symPassword) {
-    } else {
-      props.shh.generateSymKeyFromPassword(values.dcGroupId).then(symKeyID => {
-        props.setSymKeyId(symKeyID)
-        props.shh.getSymKey(symKeyID).then(symKey => {
-          props.clearMessage()
-          props.setWhisper({
-            topic: symKey.substring(0, 10),
-            symKey: symKey,
-            symPassword: values.dcGroupId,
-            isConfigured: true,
-            username: values.dcUsername,
-          })
-          window.location.reload()
+  const configWhisper = values => {
+    props.shh.generateSymKeyFromPassword(values.dcGroupId).then(symKeyID => {
+      props.shh.getSymKey(symKeyID).then(symKey => {
+        props.clearMessage()
+        props.setWhisper({
+          topic: symKey.substring(0, 10),
+          symKeyID: symKeyID,
+          symKey: symKey,
+          symPassword: values.dcGroupId,
+          isConfigured: true,
+          username: values.dcUsername,
         })
+        window.location.reload()
       })
-    }
+    })
   }
 
   const isGroupIdEqual = (values) =>
     values.dcGroupId === props.config.symPassword &&
-    values.dcGroupId.length >= 3;
+    values.dcGroupId.length >= 3
 
   const isUsernameEqual = (values) =>
     values.dcUsername === props.config.username &&
-    values.dcUsername !== EMPTY_STRING;
+    values.dcUsername !== EMPTY_STRING
+
+  const validate = (values) => {
+    const errors = {}
+    if (values.dcGroupId.length < 3) {
+      errors.dcGroupId = 'At least 3 characters are required.'
+    }
+    if (!values.dcUsername) {
+      errors.dcUsername = 'Required.'
+    }
+    return errors
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -74,13 +73,14 @@ export const SettingsDialog = (props) => {
         configWhisper(values)
       }
     },
-  });
+    validate,
+  })
 
   return (
     <div>
-      <Button color="inherit" onClick={handleClickOpen} style={{textTransform: 'none'}}>
+      <Button color="inherit" onClick={handleClickOpen} style={{ textTransform: 'none' }}>
         {!props.config.isConfigured
-          ? "SETTINGS"
+          ? 'SETTINGS'
           : props.config.username + ' @ ' + props.config.symPassword}
       </Button>
       <Dialog open={open} onClose={formik.handleSubmit} aria-labelledby="form-dialog-title">
@@ -98,6 +98,8 @@ export const SettingsDialog = (props) => {
               onChange={formik.handleChange}
               fullWidth
               required
+              error={formik.errors.dcGroupId}
+              helperText={formik.errors.dcGroupId}
             />
             <TextField
               name="dcUsername"
@@ -106,6 +108,8 @@ export const SettingsDialog = (props) => {
               onChange={formik.handleChange}
               fullWidth
               required
+              error={formik.errors.dcUsername}
+              helperText={formik.errors.dcUsername}
             />
           </DialogContent>
           <DialogActions>
@@ -116,5 +120,5 @@ export const SettingsDialog = (props) => {
         </form>
       </Dialog>
     </div>
-  );
+  )
 }

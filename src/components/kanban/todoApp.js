@@ -1,97 +1,74 @@
-import React, { memo } from "react";
-import { useInputValue, useTodos } from "./custom-hooks";
+import React from 'react'
 import '../../css/kanban.css'
 
-import { List, Paper } from "@material-ui/core";
+import { List, Paper } from '@material-ui/core'
 import TextField from '@material-ui/core/TextField'
-import ListItem from '@material-ui/core/ListItem'
-import Checkbox from '@material-ui/core/Checkbox'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import IconButton from '@material-ui/core/IconButton'
-import { DeleteOutlined } from '@material-ui/icons'
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AddCircleIcon from '@material-ui/icons/AddCircle'
 import Box from '@material-ui/core/Box'
 
-const TodoListItem = memo(props => (
-  <ListItem divider={props.divider}>
-    <Checkbox
-      onClick={props.onCheckBoxToggle}
-      checked={props.checked}
-      disableRipple
-    />
-    <ListItemText primary={props.text} />
-    <ListItemSecondaryAction>
-      <IconButton aria-label="Delete Todo" onClick={props.onButtonClick}>
-        <DeleteOutlined />
-      </IconButton>
-    </ListItemSecondaryAction>
-  </ListItem>
-));
+import TodoItem from './todoItem'
+import { useFormik } from 'formik'
 
-const AddTodo = props => (
-  <Box display="flex" flexDirection="row" alignItems="center" pt={2}>
-    <Box flexGrow={1} pl={2}>
-      <TextField
-        placeholder="What're you going to do?"
-        value={props.inputValue}
-        onChange={props.onInputChange}
-        onKeyPress={props.onInputKeyPress}
-        fullWidth
-        required
-      />
-    </Box>
-    <Box>
-      <IconButton
-        color="secondary"
-        onClick={props.onButtonClick}
-      >
-        <AddCircleIcon />
-      </IconButton>
-    </Box>
-  </Box>
-);
+const EMPTY_STRING = ''
 
+const AddTodo = props => {
+  const formik = useFormik({
+    initialValues: {
+      text: EMPTY_STRING,
+    },
+    onSubmit: values => {
+      props.onItemAdd(values.text)
+      formik.resetForm()
+    },
+  })
 
-const TodoList = props => {
   return (
-    <List>
-      {props.items.map((todo, idx) => (
-        <TodoListItem
-          {...todo}
-          key={`TodoItem.${idx}`}
-          divider={idx !== props.items.length - 1}
-          onButtonClick={() => props.onItemRemove(idx)}
-          onCheckBoxToggle={() => props.onItemCheck(idx)}
-        />
-      ))}
-    </List>
-  )
-};
-
-const TodoApp = () => {
-  const { inputValue, changeInput, clearInput, keyInput } = useInputValue()
-  const { todos, addTodo, checkTodo, removeTodo } = useTodos()
-
-  const clearInputAndAddTodo = _ => {
-    clearInput();
-    addTodo(inputValue);
-  }
-  return (
-    <Paper className='todoApp'>
-      <AddTodo
-        inputValue={inputValue}
-        onInputChange={changeInput}
-        onButtonClick={clearInputAndAddTodo}
-        onInputKeyPress={event => keyInput(event, clearInputAndAddTodo)}
-      />
-      <TodoList
-        items={todos}
-        onItemCheck={idx => checkTodo(idx)}
-        onItemRemove={idx => removeTodo(idx)}
-      />
-    </Paper>
+    <form onSubmit={formik.handleSubmit}>
+      <Box display="flex" flexDirection="row" alignItems="center" pt={2}>
+        <Box flexGrow={1} pl={2}>
+          <TextField
+            name="text"
+            placeholder="What're you going to do?"
+            value={formik.values.text}
+            onChange={formik.handleChange}
+            fullWidth
+            required
+          />
+        </Box>
+        <Box>
+          <IconButton type='submit'>
+            <AddCircleIcon/>
+          </IconButton>
+        </Box>
+      </Box>
+    </form>
   )
 }
 
-export default TodoApp;
+const TodoList = props => (
+  <List>
+    {props.items.map((todo, idx) => (
+      <TodoItem
+        {...todo}
+        key={todo.id}
+        divider={idx !== props.items.length - 1}
+        toggleTodo={id => props.toggleTodo(id)}
+        removeTodo={id => props.removeTodo(id)}
+      />
+    ))}
+  </List>
+)
+
+const TodoApp = props => (
+  <Paper className='todoApp'>
+    <AddTodo onItemAdd={text => props.addTodo(text)}/>
+    <TodoList
+      items={props.todos}
+      toggleTodo={id => props.toggleTodo(id)}
+      removeTodo={id => props.removeTodo(id)}
+    />
+  </Paper>
+)
+
+export default TodoApp
