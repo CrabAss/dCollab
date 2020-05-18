@@ -11,9 +11,16 @@ const useStyles = makeStyles({
     marginTop: 4,
     marginBottom: 4,
   },
+  h4: {
+    fontSize: '2.125rem',
+    fontWeight: 400,
+    lineHeight: 1.235,
+    letterSpacing: '0.00735em'
+  }
 })
 
 const NanoForm = props => {
+  const classes = useStyles()
   const formik = useFormik({
     initialValues: {
       text: props.text,
@@ -54,6 +61,7 @@ const EditableText = props => {
     ) : (
       <Typography
         onClick={() => setIsEditing(true)}
+        className={classes[props.textClassName]}
       >
         {props.text}
       </Typography>

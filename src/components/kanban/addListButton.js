@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 const AddListButton = props => {
   const classes = useStyles()
   return (
-    <div className={classes.root}>
+    <div className={classes.root} {...props} >
       <AddIcon className={classes.icon}/>
     </div>
   )

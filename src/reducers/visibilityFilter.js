@@ -1,4 +1,4 @@
-import { VisibilityFilters } from '../actions/todos'
+import { VisibilityFilters } from '../actions/kanban'
 
 const visibilityFilter = (state = VisibilityFilters.SHOW_ALL, action) => {
   switch (action.type) {

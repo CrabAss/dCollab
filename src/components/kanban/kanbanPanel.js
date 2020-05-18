@@ -1,11 +1,18 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import Kanban from '../../containers/kanban'
+
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import PropTypes from 'prop-types'
-import Kanban from './kanban'
+import IconButton from '@material-ui/core/IconButton'
+import SyncIcon from '@material-ui/icons/Sync'
 
 const useStyles = makeStyles((theme) => ({
+  tabAreaRoot: {
+    position: 'relative',
+    display: 'flex'
+  },
   root: {
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
@@ -15,10 +22,15 @@ const useStyles = makeStyles((theme) => ({
   padding: {
     padding: theme.spacing(3),
   },
+  refreshButton: {
+    flex: '0 0 auto',
+    borderBottom: '1px solid #e8e8e8',
+  }
 }));
 
 const AntTabs = withStyles({
   root: {
+    flex: '1 1 auto',
     borderBottom: '1px solid #e8e8e8',
     position: 'relative',
   },
@@ -84,11 +96,18 @@ export default function KanbanPanel() {
 
   return (
     <div className={classes.root}>
-      <AntTabs value={value} onChange={handleChange} aria-label="ant example">
-        <AntTab label="My Kanban" />
-        <AntTab label="Tab 2" />
-        <AntTab label="Tab 3" />
-      </AntTabs>
+      <div className={classes.tabAreaRoot}>
+        <AntTabs value={value} onChange={handleChange}>
+          <AntTab label="My Kanban"/>
+          <AntTab label="Alice's Kanban"/>
+          <AntTab label="Bob's Kanban"/>
+        </AntTabs>
+        <div className={classes.refreshButton}>
+          <IconButton>
+            <SyncIcon/>
+          </IconButton>
+        </div>
+      </div>
       <TabPanel value={value} index={0}>
         <Kanban/>
       </TabPanel>

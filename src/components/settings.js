@@ -98,7 +98,7 @@ export const SettingsDialog = props => {
               onChange={formik.handleChange}
               fullWidth
               required
-              error={formik.errors.dcGroupId}
+              error={!!formik.errors.dcGroupId}
               helperText={formik.errors.dcGroupId}
             />
             <TextField
@@ -108,7 +108,7 @@ export const SettingsDialog = props => {
               onChange={formik.handleChange}
               fullWidth
               required
-              error={formik.errors.dcUsername}
+              error={!!formik.errors.dcUsername}
               helperText={formik.errors.dcUsername}
             />
           </DialogContent>

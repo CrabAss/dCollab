@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux'
-import todos from './todos'
+import kanban from './kanban'
 import visibilityFilter from './visibilityFilter'
 import messages from './messages'
 import whisper from './whisper'
 import shh from './shh'
 
 export default combineReducers({
-  todos,
+  kanban,
   visibilityFilter,
   messages,
   whisper,

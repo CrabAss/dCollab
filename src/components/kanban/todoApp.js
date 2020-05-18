@@ -9,7 +9,8 @@ import Box from '@material-ui/core/Box'
 
 import TodoItem from './todoItem'
 import { useFormik } from 'formik'
-import Typography from '@material-ui/core/Typography'
+import { DeleteOutlined } from '@material-ui/icons'
+import EditableText from './editableText'
 
 const EMPTY_STRING = ''
 
@@ -19,7 +20,7 @@ const AddTodo = props => {
       text: EMPTY_STRING,
     },
     onSubmit: values => {
-      props.onItemAdd(values.text)
+      props.addTodo(values.text)
       formik.resetForm()
     },
   })
@@ -64,12 +65,23 @@ const TodoList = props => (
 
 const TodoApp = props => (
   <Paper className='todoApp  positionRelative'>
-    <Box mx={2} pt={4}>
-      <Typography variant='h4'>Title</Typography>
+    <Box mx={2} pt={4} className='listInfoBox'>
+      <EditableText
+        text={props.title}
+        className='listTitle'
+        textClassName='h4'
+        callback={(text) => props.modifyListTitle(text)}
+        isEditable={!props.isCompleted}
+      />
+      {props.showRemoveBtn &&
+      <IconButton onClick={() => props.removeList()}>
+        <DeleteOutlined/>
+      </IconButton>
+      }
     </Box>
-    <AddTodo onItemAdd={text => props.addTodo(text)}/>
+    <AddTodo addTodo={text => props.addTodo(text)}/>
     <TodoList
-      items={props.todos}
+      items={props.items}
       toggleTodo={id => props.toggleTodo(id)}
       removeTodo={id => props.removeTodo(id)}
       modifyTodo={(id, text) => props.modifyTodo(id, text)}

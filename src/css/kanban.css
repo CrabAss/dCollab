@@ -28,6 +28,7 @@
     right: 0;
     bottom: 0;
     left: 0;
+    background-color: #eeeeee !important;
 }
 
 .listWrapper {
@@ -39,4 +40,18 @@
     display: inline-block;
     vertical-align: top;
     white-space: nowrap;
+}
+
+.listInfoBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.listTitle {
+    flex: 1 1 auto;
+}
+
+.listRemoveBtn {
+    flex: 0 0 auto;
 }
