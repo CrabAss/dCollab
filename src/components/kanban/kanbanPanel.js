@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Kanban from '../../containers/kanban'
 
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import IconButton from '@material-ui/core/IconButton'
 import SyncIcon from '@material-ui/icons/Sync'
+import Kanban from '../../containers/kanban'
 
 const useStyles = makeStyles((theme) => ({
   tabAreaRoot: {

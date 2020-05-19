@@ -1,6 +1,7 @@
 import SplitPane from 'react-split-pane'
-import KanbanPanel from './kanban/kanbanPanel'
-import ChatPanel from '../containers/chat'
+// import KanbanPanel from './kanban/kanbanPanel'
+import Kanban from '../containers/kanban'
+import ChatPanel from '../containers/chatPanel'
 import React from 'react'
 import '../css/resizer.css'
 
@@ -16,7 +17,7 @@ const MainPanel = (props) => {
         style={{ flex: '0 1 auto' }}
         // pane1Style={{flex: '0 1 auto'}}
       >
-        <KanbanPanel/>
+        <Kanban/>
         <ChatPanel/>
       </SplitPane>
     )

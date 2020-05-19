@@ -4,7 +4,7 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 import Flatted from 'flatted';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 
-import rootReducer from './reducers'
+import rootReducer from '../reducers'
 
 
 export const transformCircular = createTransform(

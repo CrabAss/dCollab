@@ -1,32 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './css/index.css';
-import App from './containers/App';
-import * as serviceWorker from './util/serviceWorker';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { ThemeProvider } from '@material-ui/core/styles';
-import theme from './util/theme';
-
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-
-import reduxStore from './configureStore'
 import { PersistGate } from 'redux-persist/integration/react'
 
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { ThemeProvider } from '@material-ui/core/styles'
+
+import './css/index.css'
+import App from './containers/App'
+import * as serviceWorker from './util/serviceWorker'
+import theme from './util/theme'
+import reduxStore from './util/configureStore'
 
 ReactDOM.render(
-  // <React.StrictMode>
   <ThemeProvider theme={theme}>
-    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-    <CssBaseline />
+    <CssBaseline/>
     <Provider store={reduxStore.store}>
-      <PersistGate loading={<CircularProgress />} persistor={reduxStore.persistor}>
-        <App />
+      <PersistGate loading={null} persistor={reduxStore.persistor}>
+        <App/>
       </PersistGate>
     </Provider>
   </ThemeProvider>,
-  // </React.StrictMode>
   document.getElementById('root')
 );
 

@@ -21,6 +21,24 @@
     justify-content: flex-start;
 }
 
+#messages .msg.join {
+    align-items: center;
+}
+
+#messages .msg.join .joinBubble {
+    flex: none;
+    border-radius: 18px;
+    padding: 6px 12px;
+    margin: 2px 0;
+    max-width: 80%;
+    word-wrap: break-word;
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+#messages .msg.join .date {
+    text-align: center;
+}
+
 #messages .msg.sent {
     align-items: flex-end;
 }
@@ -42,7 +60,7 @@
     text-align: start;
 }
 
-#messages .msg > div {
+#messages .msg .msgBubble {
     flex: none;
     border-radius: 18px;
     padding: 6px 12px;
@@ -52,12 +70,12 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
-#messages .msg.sent > div {
+#messages .msg.sent .msgBubble {
     background-color: #2979FF;
     color: #fff;
 }
 
-#messages .msg.sent .content a {
+#messages .msg.sent .msgBubble .content a {
     text-decoration: underline;
     color: #fff;
 }
@@ -66,15 +84,15 @@
     font-size: 10px;
 }
 
-#messages .msg.received > div {
+#messages .msg.received .msgBubble {
     background-color: #fff;
     color: #000;
 }
 
-#messages .msg.sent > div:first-child {
+#messages .msg.sent .msgBubble:first-child {
     border-top-right-radius: 0;
 }
 
-#messages .msg.received > div:first-child {
+#messages .msg.received .msgBubble:first-child {
     border-top-left-radius: 0;
 }

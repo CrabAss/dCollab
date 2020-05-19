@@ -20,7 +20,6 @@ const useStyles = makeStyles({
 })
 
 const NanoForm = props => {
-  const classes = useStyles()
   const formik = useFormik({
     initialValues: {
       text: props.text,

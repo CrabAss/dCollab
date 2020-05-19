@@ -9,17 +9,19 @@ import * as shortId from 'shortid'
 
 import MsgDisplay from './msgDisplay'
 import '../../css/chat.css'
+import { SEND_MESSAGE } from '../../const/messageType'
 
 const EMPTY_STRING = ""
 
-export const ChatPanel = (props) => {
-  const sendMessage = (values) => {
+export const ChatPanel = props => {
+  const sendMessage = values => {
     const msg = {
       id: shortId.generate(),
+      type: SEND_MESSAGE,
       text: values.text,
       sender: props.username,
       date: new Date(),
-    };
+    }
 
     const postData = {
       symKeyID: props.symKeyID,

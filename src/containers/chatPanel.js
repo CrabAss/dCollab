@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { ChatPanel } from '../components/chat'
+import { ChatPanel } from '../components/chat/chatPanel'
 
 const mapStateToProps = (state, ownProps) => ({
   username: state.whisper.username,

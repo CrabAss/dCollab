@@ -1,4 +1,4 @@
-import * as shortId from 'shortid'
+export const INIT_KANBAN = 'INIT_KANBAN'
 
 export const ADD_LIST = 'ADD_LIST'
 export const REMOVE_LIST = 'REMOVE_LIST'
@@ -10,10 +10,14 @@ export const REMOVE_TODO = 'REMOVE_TODO'
 export const MODIFY_TODO = 'MODIFY_TODO'
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
 
-export const addList = (title = 'Untitled List') => ({
+export const initKanban = (kanban) => ({
+  type: INIT_KANBAN,
+  kanban
+})
+
+export const addList = (id) => ({
   type: ADD_LIST,
-  id: shortId.generate(),
-  title,
+  id
 })
 
 export const removeList = (id) => ({
@@ -27,10 +31,10 @@ export const modifyListTitle = (id, title) => ({
   title,
 })
 
-export const addTodo = (listId, text) => ({
+export const addTodo = (listId, todoId, text) => ({
   type: ADD_TODO,
   listId,
-  todoId: shortId.generate(),
+  todoId,
   text,
 })
 
