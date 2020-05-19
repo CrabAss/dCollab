@@ -16,17 +16,20 @@ const newTodoItem = (id, caption) => ({
   id,
   caption,
   isCompleted: false,
+  lastModifiedDate: new Date(),
 })
 
 const newTodoList = (id = shortId.generate(), title = 'Untitled List') => ({
   id,
   title,
-  items: []
+  items: [],
+  lastModifiedDate: new Date(),
 })
 
 const newKanban = [newTodoList()]
 
 const kanban = (state = newKanban, action) => {
+  const modifiedDate = new Date()
   switch (action.type) {
     case INIT_KANBAN:
       return action.kanban
@@ -46,6 +49,7 @@ const kanban = (state = newKanban, action) => {
       return state.map(list => {
         if (list.id === action.id) {
           list.title = action.title
+          list.lastModifiedDate = modifiedDate
         }
         return list
       })
@@ -56,6 +60,7 @@ const kanban = (state = newKanban, action) => {
             ...list.items,
             newTodoItem(action.todoId, action.text)
           ]
+          list.lastModifiedDate = modifiedDate
         }
         return list
       })
@@ -65,9 +70,11 @@ const kanban = (state = newKanban, action) => {
           list.items = list.items.map(todo => {
             if (todo.id === action.todoId) {
               todo.isCompleted = !todo.isCompleted
+              todo.lastModifiedDate = modifiedDate
             }
             return todo
           })
+          list.lastModifiedDate = modifiedDate
         }
         return list
       })
@@ -80,9 +87,11 @@ const kanban = (state = newKanban, action) => {
           list.items = list.items.map(todo => {
             if (todo.id === action.todoId) {
               todo.caption = action.text
+              todo.lastModifiedDate = modifiedDate
             }
             return todo
           })
+          list.lastModifiedDate = modifiedDate
         }
         return list
       })
@@ -92,6 +101,7 @@ const kanban = (state = newKanban, action) => {
           list.items = list.items.filter(
             todo => todo.id !== action.todoId
           )
+          list.lastModifiedDate = modifiedDate
         }
         return list
       })
