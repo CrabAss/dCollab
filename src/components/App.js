@@ -1,4 +1,5 @@
 import React from 'react'
+import * as shortId from 'shortid'
 
 import TopBar from './topBar'
 import MainPanel from '../containers/mainPanel'
@@ -15,17 +16,15 @@ import {
   TOGGLE_TODO
 } from '../actions/kanban'
 
-import * as shortId from 'shortid'
 
 class App extends React.Component {
+
   componentDidMount () {
     if (this.props.config.isConfigured) {
-      console.log('State restored from localStorage')
-      let filter = {
+      const filter = {
         topics: [this.props.config.symKey.substring(0, 10)],
         symKeyID: this.props.config.symKeyID,
       }
-
       this.props.shh.subscribe('messages', filter, this.onReceiveMessage)
       this.sendSignal(INIT_CHAT)
     }
@@ -34,7 +33,6 @@ class App extends React.Component {
   onReceiveMessage = (error, notification, subscription) => {
     let msg = decodeFromHex(notification.payload)
     switch (msg.type) {
-      // DATETIME VALIDATION?
       case KANBAN_ACTION:
         // console.log('KANBAN_ACTION: ' + msg.actionType)
         switch (msg.actionType) {
@@ -62,17 +60,25 @@ class App extends React.Component {
           default:
             console.log('ERROR: Received unknown kanban action: ' + msg.actionType)
         }
+        this.props.updateLastModifiedDate(msg.date)
         break
       case INIT_CHAT:
         this.props.setSubscriptionID(subscription.id)
         if (msg.sender !== this.props.config.username) {
           this.props.newMessage(msg)
         }
-        this.sendSignal(INIT_KANBAN, this.props.kanban)
+        this.sendSignal(INIT_KANBAN, this.props.kanban, this.props.kanbanMeta.lastModifiedDate)
         break
       case INIT_KANBAN:
         // TODO Check if other's kanban is latest
-        this.props.initKanban(msg.payload)
+        if (msg.sender !== this.props.config.username) {
+          console.log('Received new kanban from ' + msg.sender)
+          if (msg.date >= this.props.kanbanMeta.lastModifiedDate) {
+            this.props.initKanban(msg.payload)
+            this.props.updateLastModifiedDate(msg.date)
+            console.log('*** Updated by new kanban from ' + msg.sender)
+          }
+        }
         break
       case SEND_MESSAGE:
         this.props.newMessage(msg)
@@ -82,13 +88,13 @@ class App extends React.Component {
     }
   }
 
-  sendSignal = (type, payload = null) => {
+  sendSignal = (type, payload = null, date = new Date()) => {
     const msg = {
       id: shortId.generate(),
       type: type,
       payload: payload,
       sender: this.props.config.username,
-      date: new Date(),
+      date: date,
     }
 
     const postData = {
@@ -112,6 +118,7 @@ class App extends React.Component {
       </div>
     )
   }
+
 }
 
 export default App;

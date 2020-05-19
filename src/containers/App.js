@@ -10,18 +10,21 @@ import {
   modifyTodo,
   removeList,
   removeTodo,
-  toggleTodo
+  toggleTodo, updateLastModifiedDate
 } from '../actions/kanban'
 
 const mapStateToProps = (state, ownProps) => ({
   config: state.whisper,
   shh: state.shh,
   kanban: state.kanban,
+  kanbanMeta: state.kanbanMeta,
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   setSubscriptionID: (subscriptionID) => dispatch(setSubscriptionID(subscriptionID)),
   newMessage: (m) => dispatch(newMessage(m)),
+
+  updateLastModifiedDate: (date) => dispatch(updateLastModifiedDate(date)),
 
   initKanban: (kanban) => dispatch(initKanban(kanban)),
   addList: (id) => dispatch(addList(id)),

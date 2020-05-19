@@ -1,15 +1,16 @@
+import React from 'react'
 import { useFormik } from 'formik'
+import * as shortId from 'shortid'
+
 import Box from '@material-ui/core/Box'
 import TextField from '@material-ui/core/TextField'
 import IconButton from '@material-ui/core/IconButton'
 import SendIcon from '@material-ui/icons/Send'
-import React from 'react'
-import { encodeToHex } from '../../util/util'
-import * as shortId from 'shortid'
 
 import MsgDisplay from './msgDisplay'
 import '../../css/chat.css'
 import { SEND_MESSAGE } from '../../const/messageType'
+import { encodeToHex } from '../../util/util'
 
 const EMPTY_STRING = ""
 

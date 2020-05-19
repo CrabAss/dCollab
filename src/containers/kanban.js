@@ -1,13 +1,4 @@
 import { connect } from 'react-redux'
-// import {
-//   addTodo,
-//   toggleTodo,
-//   removeTodo,
-//   modifyTodo,
-//   addList,
-//   removeList,
-//   modifyListTitle
-// } from '../actions/kanban'
 import Kanban from '../components/kanban/kanban'
 
 const mapStateToProps = (state, ownProps) => ({

@@ -3,6 +3,7 @@ import Box from '@material-ui/core/Box'
 import { INIT_CHAT } from '../../const/messageType'
 
 class MsgDisplay extends React.Component {
+
   scrollToBottom = () => this.messagesEnd.scrollIntoView();
   componentDidMount() {
     this.scrollToBottom();
@@ -12,7 +13,6 @@ class MsgDisplay extends React.Component {
   }
 
   render () {
-    const selfName = this.props.username
     return (
       <Box id='messages'>
         {
@@ -31,7 +31,7 @@ class MsgDisplay extends React.Component {
                 </Box>
               )
             }
-            const msgType = selfName === msgSegment.sender ? 'sent' : 'received'
+            const msgType = this.props.username === msgSegment.sender ? 'sent' : 'received'
             const msgClasses = `msg ${msgType}`
             return (
               <Box className={msgClasses} key={msgSegment.id}>
@@ -60,6 +60,7 @@ class MsgDisplay extends React.Component {
       </Box>
     )
   }
+
 }
 
 export default MsgDisplay
