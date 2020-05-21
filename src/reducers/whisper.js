@@ -5,7 +5,6 @@ const defaultState = {
   isConfigured: false,
   username: EMPTY_STRING,
   topic: null,
-  symKey: EMPTY_STRING,
   symKeyID: null,
   symPassword: EMPTY_STRING,
   subscriptionID: EMPTY_STRING,

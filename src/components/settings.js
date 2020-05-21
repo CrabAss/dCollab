@@ -29,7 +29,6 @@ export const SettingsDialog = props => {
         props.setWhisper({
           topic: symKey.substring(0, 10),
           symKeyID: symKeyID,
-          symKey: symKey,
           symPassword: values.dcGroupId,
           isConfigured: true,
           username: values.dcUsername,

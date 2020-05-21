@@ -22,7 +22,7 @@ class App extends React.Component {
   componentDidMount () {
     if (this.props.config.isConfigured) {
       const filter = {
-        topics: [this.props.config.symKey.substring(0, 10)],
+        topics: [this.props.config.topic],
         symKeyID: this.props.config.symKeyID,
       }
       this.props.shh.subscribe('messages', filter, this.onReceiveMessage)
@@ -74,7 +74,7 @@ class App extends React.Component {
         if (msg.sender !== this.props.config.username) {
           console.log('Received new kanban from ' + msg.sender)
           if (msg.date >= this.props.kanbanMeta.lastModifiedDate) {
-            this.props.initKanban(msg.payload)
+            this.props.initKanban(msg.text)
             this.props.updateLastModifiedDate(msg.date)
             console.log('*** Updated by new kanban from ' + msg.sender)
           }
@@ -88,11 +88,11 @@ class App extends React.Component {
     }
   }
 
-  sendSignal = (type, payload = null, date = new Date()) => {
+  sendSignal = (type, text = null, date = new Date()) => {
     const msg = {
       id: shortId.generate(),
       type: type,
-      payload: payload,
+      text: text,
       sender: this.props.config.username,
       date: date,
     }
