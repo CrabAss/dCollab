@@ -1,6 +1,7 @@
 {
   "name": "dcollab",
   "version": "0.1.0",
+  "license": "AGPL-3.0-or-later",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.9.13",
