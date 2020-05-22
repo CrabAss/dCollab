@@ -82,6 +82,7 @@ class App extends React.Component {
         break
       case SEND_MESSAGE:
         this.props.newMessage(msg)
+
         break
       default:
         break

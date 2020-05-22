@@ -21,7 +21,7 @@ export const ChatPanel = props => {
       type: SEND_MESSAGE,
       text: values.text,
       sender: props.username,
-      date: new Date(),
+      date: Date.now(),
     }
 
     const postData = {
@@ -30,7 +30,7 @@ export const ChatPanel = props => {
       payload: encodeToHex(JSON.stringify(msg)),
       ttl: 60,
       powTarget: 1,
-      powTime: 100
+      powTime: 100000
     };
 
     props.shh.post(postData);
@@ -41,7 +41,17 @@ export const ChatPanel = props => {
       text: EMPTY_STRING,
     },
     onSubmit: values => {
-      sendMessage(values)
+      let timesRun = 0
+      let interval = setInterval(() => {
+        timesRun += 1
+        if (timesRun === 512) {
+          clearInterval(interval)
+        }
+        let textLen = (timesRun + 8) - (timesRun % 8)
+        let values = { text: '0'.repeat(textLen) }
+        sendMessage(values)
+      }, 1000)
+      // sendMessage(values)
       formik.resetForm()
     },
   });

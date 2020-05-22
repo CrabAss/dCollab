@@ -6,7 +6,9 @@ const messages = (state = [], action) => {
   switch (action.type) {
     case NEW_MSG:
       const stateCopy = state.slice()
-      const newMsg = { id: action.m.id, text: action.m.text, date: getMsgDate(new Date(action.m.date)) }
+      const timeDiff = Date.now() - action.m.date
+      const msgText = action.m.text ? action.m.text.length + ',' + timeDiff : null
+      const newMsg = { id: action.m.id, text: msgText, date: null }
       const newMsgSegment = action.m.type === INIT_CHAT
         ? {
           id: action.m.id,
