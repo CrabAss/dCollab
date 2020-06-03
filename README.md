@@ -10,4 +10,4 @@ You can find the minimum viable product of Whisper v6 in [this repo](https://git
 
 Copyright (c) 2020 CrabAss.
 
-dCollab is licensed under the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version. For details, please refer to COPYING.
+dCollab is licensed under MIT License. For details, please refer to `LICENSE`.
